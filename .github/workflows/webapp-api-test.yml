@@ -1,0 +1,29 @@
+name: webapp-api-test
+
+on:
+  pull_request:
+    branches:
+      main
+    paths:
+      - 'tools/web-fuzzing-introspection/**'
+      - '.github/helper/**'
+      - '.github/workflows/webapp-api-test.yml'
+permissions: read-all
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: webapp-api-test
+    steps:
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v2.4.0
+    - name: Set up Python 3.8
+      uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v3.0.0
+      with:
+        python-version: 3.8
+    - name: Install venv
+      run: sudo apt-get install python3-venv
+    - name: Set up venv
+      run: python3 -m venv tools/web-fuzzing-introspection/.venv
+    - name: Active venv dependencies
+      run: source tools/web-fuzzing-introspection/.venv/bin/activate && pip install -r tools/web-fuzzing-introspection/requirements.txt
+    - name: Run test
+      run: source tools/web-fuzzing-introspection/.venv/bin/activate && python3 .github/helper/api_test.py

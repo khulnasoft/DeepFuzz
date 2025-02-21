@@ -1,0 +1,10 @@
+homepage: https://github.com/khulnasoft/deepfuzz
+main_repo: https://github.com/khulnasoft/deepfuzz
+language: python
+fuzzing_engines:
+- libfuzzer
+sanitizers:
+- address
+- undefined
+primary_contacts: autofuzz@deepfuzz.com
+%s%s
